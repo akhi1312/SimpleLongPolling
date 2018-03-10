@@ -23,7 +23,7 @@ public class LongPolling
         int  first = rand.nextInt(5) + 1;
          long start = System.currentTimeMillis();
          try {
-             long sleepTimeInMilli = 5000L + 1000L*secureRandom.nextInt(10);  // 5 - 15 seconds
+             long sleepTimeInMilli = 1000L*secureRandom.nextInt(10);  // 5 - 15 seconds
              Thread.sleep(sleepTimeInMilli);
          } catch (InterruptedException ie) {
              ie.printStackTrace();
@@ -32,7 +32,7 @@ public class LongPolling
         int  last = rand.nextInt(5) + 1;
          long end = System.currentTimeMillis();
         if(first != last)
-            return "After " + (end-start) +"ms the server responds with." + "Old Data " + first + "New Data " + last;
+            return "After " + (end-start) +" ms the server responds with Echo";
         else
             return waitFor5To15Seconds();
     }
