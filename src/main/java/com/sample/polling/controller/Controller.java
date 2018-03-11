@@ -6,23 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 @RestController
 public class Controller {
 
     @Autowired
     LongPolling longPolling;
+    private DeferredResult result  ;
 
-/*    @RequestMapping("/")
-    public String home() {
-
-        return "Sample of Long Polling Check Chrome Console";
-    }*/
-
+    @RequestMapping("/update-price")
+    public String updatePrice(Double price) {
+        result.setResult(price);
+        return "success";
+    }
 
     @RequestMapping("/polling")
-    public ResponseEntity topoll() {
-
-        return ResponseEntity.ok(longPolling.waitFor5To15Seconds());
+    public DeferredResult<Double> topoll() {
+        result = new DeferredResult();
+        return result;
     }
 }

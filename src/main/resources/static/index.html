@@ -7,7 +7,7 @@
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
@@ -17,13 +17,28 @@
 
 <body>
 <div id="picoutput" class="container">
-    <h1>Long Polling Demo</h1>
+    <h1 align="center">Long Polling Demo</h1>
+    <div class="row">
+        <form class="form-group" id="form" action="/update-price">
+            <label>Enter new price</label><input class="forn-control" type="text" name="price" type="text" />
+            <button type="submit" class ="btn btn-secondary">Update price</button>
+        </form>
+    </div>
+
+    <div>
+        <button id="priceButton" type="button" class="btn btn-primary" >Get New Price</button>
+    </div>
+
+    <h5>Pricing tracker</h5>
     <table class="table table-striped">
        <thead>
        <th>Invoke Count</th>
         <th>Content</th>
        </thead>
        <tbody>
+       <tr>
+           <td class="text-center" colspan="2"><i class ="fas fa-spinner fa-spin"></i></td>
+       </tr>
        </tbody>
 </table>
 </div>
@@ -32,21 +47,39 @@
 <script>
 
     $(document).ready(function () {
+        $("#form").submit(function( event ) {
+            event.preventDefault();
+            var data = $("#form").serialize();
+            /*$.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                success: success,
+                dataType: dataType
+            });*/
+            $.post( "/update-price", $( "#form" ).serialize() );
+        });
+
+        $("#priceButton").click(function(){
+            poll();
+            $("#picoutput tbody tr:first").show().fadeIn();
+        });
+
         var count = 0;
-        (function poll() {
-            setTimeout(function() {
+        function poll() {
                 $.ajax({
                     url: "/polling",
                     success: function(data, status, jqXHR) {
                         count = count+1;
-                        $('#picoutput').find("tbody").append("<tr><td>"+count+"</td><td>" +data+"</td>></tr>");
+                        $("#picoutput tbody tr:first").fadeOut();
+                        $("#picoutput tbody tr:first").after("<tr><td>"+count+"</td><td>Update price is " +data+"</td>></tr>");
                         console.log(data);
-                        setTimeout( poll, 10 );
+                       // setTimeout( poll, 10 );
                     },
                     error: function(jqXHR, status, errorThrown) {
                         if (status=='timeout') {
                             console.log( 'request timed out.' );
-                            setTimeout( poll, 10 );
+                            setTimeout( poll, 1000 );
                         }
                         else {
                             console.log(status);
@@ -56,8 +89,8 @@
                     dataType: "text",
                     timeout: 10000
                 });
-            }, 10);
-        })();
+        }
+        poll();
     });
 </script>
 
