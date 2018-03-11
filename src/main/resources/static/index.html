@@ -61,11 +61,13 @@
         });
 
         $("#priceButton").click(function(){
+            timeout =0;
             poll();
             $("#picoutput tbody tr:first").show().fadeIn();
         });
 
         var count = 0;
+        var timeout = 0
         function poll() {
                 $.ajax({
                     url: "/polling",
@@ -78,8 +80,13 @@
                     },
                     error: function(jqXHR, status, errorThrown) {
                         if (status=='timeout') {
-                            console.log( 'request timed out.' );
-                            setTimeout( poll, 1000 );
+                            if(timeout < 3) {
+                                timeout = timeout +1;
+                                $("#picoutput tbody tr:first").after("<tr><td> Retry Count "+timeout+"</td><td> Connection TimedOut </td>></tr>");
+                                console.log('request timed out.');
+                                setTimeout(poll, 1000);
+                            }
+                            $("#picoutput tbody tr:first").fadeOut();
                         }
                         else {
                             console.log(status);
