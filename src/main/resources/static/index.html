@@ -67,7 +67,7 @@
         });
 
         var count = 0;
-        var timeout = 0
+        var reattempt = 0;
         function poll() {
                 $.ajax({
                     url: "/polling",
@@ -80,24 +80,33 @@
                     },
                     error: function(jqXHR, status, errorThrown) {
                         if (status=='timeout') {
-                            if(timeout < 3) {
-                                timeout = timeout +1;
-                                $("#picoutput tbody tr:first").after("<tr><td> Retry Count "+timeout+"</td><td> Connection TimedOut </td>></tr>");
+                            if(reattempt < 2) {
+                                reattempt = reattempt + 1;
+                                $("#picoutput tbody tr:first").after("<tr><td> Retry Count "+ reattempt +"</td><td> Connection TimedOut </td>></tr>");
                                 console.log('request timed out.');
+                                //$("#picoutput tbody tr:first").show().fadeIn();
                                 setTimeout(poll, 1000);
                             }
-                            $("#picoutput tbody tr:first").fadeOut();
+                           else {
+                                $("#picoutput tbody tr:first").after("<tr><td class = \"text-center\"colspan =2> Request Closed </td>></tr>");
+                                $("#picoutput tbody tr:first").fadeOut();
+                            }
+
                         }
+
                         else {
                             console.log(status);
                             setTimeout( poll, 12000 );
                         }
+
+
                     },
                     dataType: "text",
                     timeout: 10000
                 });
         }
         poll();
+
     });
 </script>
 
