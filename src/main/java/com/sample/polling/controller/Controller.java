@@ -12,9 +12,11 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RestController
 public class Controller {
 
+
     @Autowired
     private LongPolling longPolling;
     private DeferredResult<ResultView> result  ;
+
 
     @PostMapping("/price/clear")
     public String clearPrice() {
