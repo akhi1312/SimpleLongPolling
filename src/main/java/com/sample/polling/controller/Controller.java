@@ -11,8 +11,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RestController
 public class Controller {
 
-    @Autowired
-    LongPolling longPolling;
+//     @Autowired
+//     LongPolling longPolling;
     private DeferredResult result  ;
 
     @RequestMapping("/update-price")
