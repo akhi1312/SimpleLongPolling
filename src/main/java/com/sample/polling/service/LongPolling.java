@@ -14,7 +14,6 @@ import java.util.concurrent.*;
 public class LongPolling
 
     {
-<<<<<<< HEAD
         private Stack<ResultView> resultMap = new Stack<>();
 
         private static SecureRandom secureRandom = new SecureRandom();
@@ -39,33 +38,6 @@ public class LongPolling
             if (!resultMap.isEmpty()) result.setResult(resultMap.peek());
         }
 
-=======
-//         private static SecureRandom secureRandom = new SecureRandom();
-//         static {
-//         secureRandom.setSeed( System.currentTimeMillis() );
-//     }
-
-//         static Random rand = new Random();
-
-//     @Async
-//     public String waitFor5To15Seconds() {
-//         int  first = rand.nextInt(5) + 1;
-//          long start = System.currentTimeMillis();
-//          try {
-//              long sleepTimeInMilli = 1000L*secureRandom.nextInt(10);  // 5 - 15 seconds
-//              Thread.sleep(sleepTimeInMilli);
-//          } catch (InterruptedException ie) {
-//              ie.printStackTrace();
-//          }
-
-//         int  last = rand.nextInt(5) + 1;
-//          long end = System.currentTimeMillis();
-//         if(first != last)
-//             return "After " + (end-start) +" ms the server responds with Echo";
-//         else
-//             return waitFor5To15Seconds();
-//     }
->>>>>>> cc138340608e898afa1920cf96560f6ddc955530
 
 }
 
