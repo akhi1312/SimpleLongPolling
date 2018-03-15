@@ -23,7 +23,7 @@ public class LongPollingApplication {
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(2);
         executor.setQueueCapacity(5);
-        executor.setThreadNamePrefix("GithubLookup-");
+        executor.setThreadNamePrefix("Long Polling");
         executor.initialize();
         return executor;
     }
