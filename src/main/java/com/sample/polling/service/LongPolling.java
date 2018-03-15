@@ -28,14 +28,17 @@ public class LongPolling
             resultMap.push(new ResultView(value , waitTimeInMilliSec));
         }
 
-        @Async
+        @Async("myThreadPool")
         public void sendResponse(DeferredResult<ResultView> result) {
             try{
                  if (!resultMap.isEmpty()) Thread.sleep(resultMap.peek().getResponseTime());
             } catch (InterruptedException ie) {
               ie.printStackTrace();
              }
-            if (!resultMap.isEmpty()) result.setResult(resultMap.peek());
+
+                 if (!resultMap.isEmpty()) result.setResult(resultMap.peek());
+
+
         }
 
 
