@@ -12,10 +12,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 @CrossOrigin(origins = "http://localhost:3000")
 public class Controller {
 
-
-    @Autowired
-    private LongPolling longPolling;
-
+     @Autowired
+     private LongPolling longPolling;
 
 
     @PostMapping("/price/clear")
@@ -24,9 +22,10 @@ public class Controller {
         return "success";
     }
 
+
+
     @PostMapping("/price/update")
     public String updatePrice(Double price) {
-       // result.setResult(price);
         longPolling.setValue(price);
         return "success";
     }

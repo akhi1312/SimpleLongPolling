@@ -5,20 +5,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import java.security.SecureRandom;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Stack;
+
 
 
 @Service
 public class LongPolling
 
     {
-        private Stack<ResultView> resultMap = new Stack<>();
+        private Deque<ResultView> resultMap = new LinkedList<>();
 
         private static SecureRandom secureRandom = new SecureRandom();
 
         public void clearPrice() {
-            // resultMap.empty();
-            resultMap = new Stack<>();
+            resultMap = new LinkedList<>();
         }
 
         public void setValue(Double value) {
@@ -31,7 +33,7 @@ public class LongPolling
             try{
                  if (!resultMap.isEmpty()) Thread.sleep(resultMap.peek().getResponseTime());
             } catch (InterruptedException ie) {
-              ie.printStackTrace();
+                Thread.currentThread().interrupt();
              }
 
                  if (!resultMap.isEmpty()) result.setResult(resultMap.peek());
