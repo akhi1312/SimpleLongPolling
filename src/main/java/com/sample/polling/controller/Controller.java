@@ -38,6 +38,12 @@ public class Controller {
             return result;
         }
 
+// For performance Testing
+
+    @PostMapping("/price/get")
+    public ResultView syncPolling(@RequestParam(required = false,defaultValue = "10") Long timeout) {
+        return longPolling.getResponse();
+    }
 
 }
 

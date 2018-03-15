@@ -19,6 +19,9 @@ public class ThreadPool{
         @Value("${spring.queue.capacity}")
         private int queueCapacity;
 
+       @Value("${spring.queue.keepAliveSeconds}")
+        private int keepAliveSec;
+
 
 
         @Bean(name="myThreadPool")
@@ -27,6 +30,9 @@ public class ThreadPool{
             executor.setCorePoolSize(corePoolSize);
             executor.setMaxPoolSize(maxPoolSize);
             executor.setQueueCapacity(queueCapacity);
+            executor.setKeepAliveSeconds(2);
+            executor.setAllowCoreThreadTimeOut(true);
+
             executor.initialize();
             return executor;
         }

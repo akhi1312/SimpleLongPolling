@@ -42,6 +42,16 @@ public class LongPolling
         }
 
 
+
+        public ResultView getResponse() {
+            try{
+                if (!resultMap.isEmpty()) Thread.sleep(resultMap.peek().getResponseTime());
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+            if (!resultMap.isEmpty()) return resultMap.peek();
+            else return new ResultView(0.0,0l);
+        }
 }
 
 
